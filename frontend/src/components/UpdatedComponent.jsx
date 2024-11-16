@@ -64,7 +64,8 @@ export default function VideoConference() {
   };
 
   const initWebSocket = () => {
-    ws.current = new WebSocket(`ws://${import.meta.env.VITE_BACKEND_URL}/websocket/${interviewId}`);
+    ws.current = new WebSocket(`wss://${import.meta.env.VITE_BACKEND_URL}/websocket/${interviewId}`);
+    // ws.current = new WebSocket(`ws://${import.meta.env.VITE_BACKEND_URL}/websocket/${interviewId}`);
 
     ws.current.onopen = () => {
       console.log('WebSocket connection established');
