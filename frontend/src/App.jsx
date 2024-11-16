@@ -15,12 +15,8 @@ function App() {
    <GoogleOAuthProvider clientId='951522285736-dge67ps62hcv421d7qcbqdv64vp9gusl.apps.googleusercontent.com'>
     <Router>
       <Routes>
-      <Route path='/'  />
       {/* <Route path='/interview/:interviewId' element={<VideoConference/>} /> */}
       <Route path='/interview' element={<VideoConference/>} />
-{/* 
-      <Route path='/deal/:dealId' element={< DealDetailsForm/>}/>
-      <Route path='/calender' element={< CalenderDemo/>}/> */}
       </Routes>
     </Router>
    </GoogleOAuthProvider>
@@ -28,3 +24,8 @@ function App() {
 }
 
 export default App
+
+/*       <Route path='/'  />
+
+      <Route path='/deal/:dealId' element={< DealDetailsForm/>}/>
+      <Route path='/calender' element={< CalenderDemo/>}/> */
