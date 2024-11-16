@@ -11,11 +11,18 @@ import mainRouter from './routes/index.js';
 const app = express();
 const port = process.env.PORT || 3000;
 
-const corsOptions={
-  origin: 'https://saksham-green.vercel.app',
-methods: ['GET', 'POST', 'OPTIONS','PUT','DELETE'],
-credentials: true,
-allowedHeaders: ['X-CSRF-Token', 'X-Requested-With', 'Accept', 'Accept-Version', 'Content-Length', 'Content-MD5', 'Content-Type', 'Date', 'X-Api-Version','Authorization']
+const allowedOrigins = ['https://saksham-green.vercel.app', 'https://saksham.quizai.tech','https://cron-job.org'];
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: ['GET', 'POST', 'OPTIONS', 'PUT', 'DELETE'],
+  credentials: true,
+  allowedHeaders: ['X-CSRF-Token', 'X-Requested-With', 'Accept', 'Accept-Version', 'Content-Length', 'Content-MD5', 'Content-Type', 'Date', 'X-Api-Version', 'Authorization']
 };
 app.use(cors(corsOptions));
 app.use(express.json());
