@@ -9,20 +9,20 @@ import { convertDate } from './config/dateHelper.js';
 import mainRouter from './routes/index.js';
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
-app.use(cors({
-  origin: '*', // Replace with specific origin if needed for security
-  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed methods
-  allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
-}));
-
+const corsOptions={
+  origin: 'https://saksham-green.vercel.app',
+methods: ['GET', 'POST', 'OPTIONS','PUT','DELETE'],
+credentials: true,
+allowedHeaders: ['X-CSRF-Token', 'X-Requested-With', 'Accept', 'Accept-Version', 'Content-Length', 'Content-MD5', 'Content-Type', 'Date', 'X-Api-Version','Authorization']
+};
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(mainRouter);
 
 
-// const currentDate = new Date(); 
-// console.log(convertDate("27/10/2024 10:30"));
+
 // Initialize HTTP server
 const server = http.createServer(app);
 
