@@ -126,3 +126,100 @@ export const llmCall=async(userReply,conversationId)=>{
         console.log(error);
     }
 }
+
+export const openAIFeedBack=async(job_description,interview_conversation)=>{
+       try {
+        const response = await openai.chat.completions.create({
+            model: "gpt-4o-mini",
+            messages: [
+                { role: "system", content: "You are an expert evaluator of interviews." },
+                {
+                    role: "user",
+                    content: `
+                        Evaluate the candidate's skills in the following categories:
+                        - **Technical skills** in relation to the provided Job Description (JD).
+                        - **Communication skills** (clarity, confidence, articulation).
+                        - **Behavioral skills** (teamwork, adaptability, attitude).
+        
+                        Provide:
+                        1. Ratings out of 10 for "technical", "communication", and "behavioral".
+                        2. An overall rating out of 10, considering all three aspects.
+                        3. Feedback for each category and overall performance.
+        
+                        Inputs:
+                        - **Job Description (JD)**: ${job_description}
+                        - **Interview Conversation**: ${interview_conversation}
+                    `,
+                },
+            ],
+            functions: [
+                {
+                    name: "evaluate_candidate",
+                    description: "Evaluate technical, communication, and behavioral skills, with ratings and overall feedback.",
+                    parameters: {
+                        type: "object",
+                        properties: {
+                            technical: {
+                                type: "object",
+                                description: "Technical skills evaluation and rating.",
+                                properties: {
+                                    rating: { type: "integer", description: "Technical rating out of 10." },
+                                    feedback: { type: "string", description: "Feedback on technical skills." },
+                                    strength: { type: "string", description: "Strength of the candidate, e.g., 'Teamwork and adaptability'." },
+                                    improvement: { type: "string", description: "Area of improvement, e.g., 'More proactive problem-solving'." }
+                                },
+                                required: ["rating", "feedback", "strength", "improvement"]
+                            },
+                            communication: {
+                                type: "object",
+                                description: "Communication skills evaluation and rating.",
+                                properties: {
+                                    rating: { type: "integer", description: "Communication rating out of 10." },
+                                    feedback: { type: "string", description: "Feedback on communication skills." },
+                                    strength: { type: "string", description: "Strength of the candidate, e.g., 'Teamwork and adaptability'." },
+                                    improvement: { type: "string", description: "Area of improvement, e.g., 'More proactive problem-solving'." }
+                                },
+                                required: ["rating", "feedback", "strength", "improvement"]
+                            },
+                            behavioral: {
+                                type: "object",
+                                description: "Behavioral skills evaluation and rating.",
+                                properties: {
+                                    rating: { type: "integer", description: "Behavioral rating out of 10." },
+                                    feedback: { type: "string", description: "Feedback on behavioral skills." },
+                                    strength: { type: "string", description: "Strength of the candidate, e.g., 'Teamwork and adaptability'." },
+                                    improvement: { type: "string", description: "Area of improvement, e.g., 'More proactive problem-solving'." }
+                                },
+                                required: ["rating", "feedback", "strength", "improvement"]
+                            },
+                            overall: {
+                                type: "object",
+                                description: "Overall rating and feedback.",
+                                properties: {
+                                    rating: { type: "integer", description: "Overall rating out of 10." },
+                                    feedback: { type: "string", description: "Overall feedback for the candidate." },
+                                    strength: { type: "string", description: "Strength of the candidate, e.g., 'Teamwork and adaptability'." },
+                                    improvement: { type: "string", description: "Area of improvement, e.g., 'More proactive problem-solving'." }
+                                },
+                                required: ["rating", "feedback", "strength", "improvement"]
+                            }
+                        },
+                        required: ["technical", "communication", "behavioral", "overall"]
+                    }
+                }
+            ],            
+            function_call: { name: "evaluate_candidate" },
+        });
+        // Parse the structured output
+        const structuredOutput = response.choices[0].message.function_call.arguments;
+        console.log(structuredOutput);
+        const parsedOutput = JSON.parse(structuredOutput);
+        console.log("users feedback is",parsedOutput);
+        return parsedOutput;
+        
+       } catch (error) {
+          console.log("error occured:",error.message);
+          return null;
+          
+       }
+}

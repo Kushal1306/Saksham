@@ -1,8 +1,9 @@
 import express from 'express';
+import { getInterviewFeedback } from '../controllers/feeback.js';
 
 const feedbackRoutes=express.Router();
 
-feedbackRoutes.post("/:conversationId",);
+feedbackRoutes.get("/:conversationId",getInterviewFeedback);
 
 
 export default feedbackRoutes;

@@ -8,10 +8,12 @@ import cors from 'cors';
 import { convertDate } from './config/dateHelper.js';
 import mainRouter from './routes/index.js';
 
+
 const app = express();
 const port = process.env.PORT || 3000;
 
-const allowedOrigins = ['https://saksham-green.vercel.app', 'https://saksham.quizai.tech','https://cron-job.org'];
+
+const allowedOrigins = ['https://saksham-green.vercel.app', 'https://saksham.quizai.tech','https://cron-job.org','http://localhost:5173'];
 const corsOptions = {
   origin: (origin, callback) => {
     if (!origin || allowedOrigins.includes(origin)) {
@@ -37,7 +39,7 @@ const server = http.createServer(app);
 // Initialize WebSocket server
 const wss = new WebSocketServer({ server });
 connectToDB();
-// Handle WebSocket connections
+
 wss.on('connection', (ws, req) => {
   handleWebSocketConnection(ws, req);
 });

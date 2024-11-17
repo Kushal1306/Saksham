@@ -4,15 +4,15 @@ const feedbackSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId, 
       ref: 'Candidate', 
       required: true, 
-      index: true // Index on candidate_id
+      index: true 
     },
     campaign_id: { 
       type: mongoose.Schema.Types.ObjectId, 
       ref: 'Campaign', 
       required: true, 
-      index: true // Index on interview_id
+      index: true
     },
-    interview_summary: { type: String, required: true },
+    interview_summary: { type: String },
     strengths: [{ type: String }],  
     weaknesses: [{ type: String }],  
     parameters: {                    

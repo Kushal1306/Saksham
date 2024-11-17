@@ -7,7 +7,7 @@ const mainRouter=express.Router();
 
 // mainRouter.use("/user",UserRouter);
 
-// mainRouter.use("/feedback",feedbackRoutes);
+mainRouter.use("/feedback",feedbackRoutes);
 
 // mainRouter.use("/test",TestRouter);
 mainRouter.use("/saksham",sakshamRouter);

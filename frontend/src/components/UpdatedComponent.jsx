@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Phone, Maximize2, Mic, MicOff } from "lucide-react";
 import { useLocation, useParams } from 'react-router-dom';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 // import dotenv from 'dotenv'
 
 // dotenv.config();
@@ -18,6 +19,7 @@ export default function VideoConference() {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
   const [isAudioOn, setIsAudioOn] = useState(false);
+  const navigate = useNavigate();
   const [dialog, setDialog] = useState('');
 
   const videoRef = useRef(null);
@@ -132,7 +134,7 @@ export default function VideoConference() {
       console.error('Error accessing audio:', error);
     }
   };
-
+  
   const stopAudio = () => {
     if (sourceNodeRef.current) {
       sourceNodeRef.current.disconnect();
@@ -167,17 +169,8 @@ export default function VideoConference() {
     }
   };
 
-  const handleRecording = (stream) => {
-    const mediaRecorder = new MediaRecorder(stream);
-    mediaRecorderRef.current = mediaRecorder;
-    mediaRecorder.ondataavailable = (event) => {
-      if (event.data.size > 0) {
-        setRecordedChunks((prev) => [...prev, event.data]);
-      }
-    };
-    mediaRecorder.start();
-    setIsRecording(true);
-  };
+  // 
+  
 
   useEffect(() => {
     if (isFullscreen) {
@@ -186,7 +179,7 @@ export default function VideoConference() {
           if (videoRef.current) {
             videoRef.current.srcObject = stream;
           }
-          handleRecording(stream);
+          // handleRecording(stream);
           initWebSocket();
 
           timerRef.current = setInterval(() => {
@@ -213,12 +206,12 @@ export default function VideoConference() {
     return `${minutes}m ${remainingSeconds}s`;
   };
 
-  const handleStopRecording = () => {
-    if (mediaRecorderRef.current) {
-      mediaRecorderRef.current.stop();
-      setIsRecording(false);
-    }
-  };
+  // const handleStopRecording = () => {
+  //   if (mediaRecorderRef.current) {
+  //     mediaRecorderRef.current.stop();
+  //     setIsRecording(false);
+  //   }
+  // };
 
   const handleDownload = () => {
     const blob = new Blob(recordedChunks, { type: 'video/webm' });
@@ -228,13 +221,20 @@ export default function VideoConference() {
     a.download = 'recording.webm';
     a.click();
   };
+  
+  const stopVideo = () => {
+    const videoTracks = videoRef.current?.srcObject?.getTracks().filter(track => track.kind === 'video');
+    videoTracks.forEach(track => track.stop()); // Stop the video track
+  };
 
   const handleEndCall = () => {
-    handleStopRecording();
+    // handleStopRecording();
     stopAudio();
+    stopVideo();
     if (ws.current) {
       ws.current.close();
     }
+    navigate(`/feedback?interviewId=${interviewId}`);
     exitFullscreen();
   };
 
@@ -261,7 +261,7 @@ export default function VideoConference() {
       }
 
       {isFullscreen && (
-        <div className="flex-grow flex justify-center items-center space-x-8 mb-4">
+        <div className="flex-grow flex justify-center items-center space-x-8 mb-2">
           {/* User Video */}
           <div className="w-96 h-80 bg-white rounded-lg overflow-hidden relative shadow-xl">
             <video ref={videoRef} autoPlay playsInline muted className="w-full h-full object-cover" />
@@ -288,7 +288,7 @@ export default function VideoConference() {
       )}
 
       {isFullscreen && (
-        <div className="flex justify-center mb-16 space-x-4">
+        <div className="flex justify-center mb-24 space-x-4">
           <Button
             onClick={() => setIsAudioOn(!isAudioOn)}
             className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-full shadow-lg"
@@ -309,14 +309,14 @@ export default function VideoConference() {
             End Call
           </Button>
 
-          {isRecording && (
+          {/* {isRecording && (
             <Button
               onClick={handleDownload}
               className="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-full shadow-lg"
             >
               Download Recording
             </Button>
-          )}
+          )} */}
         </div>
       )}
 

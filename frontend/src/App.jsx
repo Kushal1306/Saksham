@@ -9,6 +9,8 @@ import { GoogleOAuthProvider } from '@react-oauth/google'
 import VideoConference from './components/UpdatedComponent';
 import DealDetailsForm from './pages/Test';
 import CalenderDemo from './pages/CalenderDemo';
+import NotFoundPage from './pages/NotFound';
+import Feedback from './pages/Feedback';
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
       <Routes>
       {/* <Route path='/interview/:interviewId' element={<VideoConference/>} /> */}
       <Route path='/interview' element={<VideoConference/>} />
+      <Route path='/feedback' element={<Feedback/>} />
+      <Route path='*' element={<NotFoundPage/>} />
       </Routes>
     </Router>
    </GoogleOAuthProvider>
