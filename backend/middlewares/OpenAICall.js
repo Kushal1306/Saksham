@@ -117,7 +117,7 @@ export const llmCall=async(userReply,conversationId)=>{
                 Follow these guidelines:
                 - Always base your questions on the job description (JD), whether it's an engineering or management role.
                 - Ask one question at a time, focusing on relevant skills, experiences, and scenarios.
-                - Do not explicitly tell the candidate what you are assessing; instead, evaluate subtly through their responses.
+                - Do not explicitly tell the candidate what you are assessing; instead, evaluate subtly through their responses. means directly ask questions donot mention on what you are assessing.
                 - Tailor your questions based on the role type:
                   - For **engineering roles**, include problem-solving questions, ask about technical tools, and evaluate practical skills.
                   - For **management roles**, focus on team leadership, conflict resolution, and strategic thinking.
