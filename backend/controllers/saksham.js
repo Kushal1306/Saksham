@@ -3,6 +3,8 @@ import Candidate from "../models/Candidate.js";
 import { convertDate } from "../config/dateHelper.js";
 import sendMail from "../helpers/sendMail.js";
 import mongoose from "mongoose";
+import { getJDBasedOnRequirement, getQuestionForJD } from "../middlewares/OpenAICall.js";
+import { createCampaignByUser } from "../helpers/interview.js";
 
 export const getInterviewData = async (req, res) => {
     try {
@@ -60,9 +62,18 @@ export const createCampaign=async(req,res)=>{
 
          if(data.expiry_time)
             data.expiry_time = convertDate(data.expiry_time);
+        // const jd_data=`${role_name} ${job_description}`;
+        //  const newCampaign = await Campaign.create(data);
 
-         const newCampaign = await Campaign.create(data);
-         
+        const newQuestions=await  getQuestionForJD(data.job_description);
+        if(!newQuestions)
+            return res.status(401).json({
+             message:"failed generating questions"
+        });
+        if(!data.questions)
+            data.questions=newQuestions;
+
+        const newCampaign=await createCampaignByUser(data);
          if(!newCampaign)
             return res.status(401).json({
         success:false,
@@ -138,6 +149,9 @@ export const inviteToInterview=async(req,res)=>{
             // await sendMail(recipient, subject, text);
             console.log(recipient,subject,text);
         }
+        return res.status(201).json({
+            message:"suceess inviting users"
+        });
         
     } catch (error) {
         console.log("Error occurred:", error.message); 
@@ -145,5 +159,23 @@ export const inviteToInterview=async(req,res)=>{
             success: false,
             message: error.message
         }); 
+    }
+}
+
+export const generateJD=async(req,res)=>{
+    try {
+        const jd_data=req.body.jd_data;
+        const job_description=await getJDBasedOnRequirement(jd_data);
+        if(!job_description)
+            return res.status(400).json({
+            message:"failed geenrating JD"
+            });
+        return res.status(201).json({
+            message:"suceess generating JD",
+            job_description:job_description
+        });
+
+    } catch (error) {
+        console.log("error occured",error.message);
     }
 }

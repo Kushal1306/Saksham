@@ -49,4 +49,7 @@ export default defineConfig({
   optimizeDeps: {
     exclude: ['onnxruntime-web'], // Avoid dependency pre-bundling issues
   },
+  define: {
+    'process.env': {}
+  }
 });

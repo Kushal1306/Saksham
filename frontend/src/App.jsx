@@ -11,6 +11,7 @@ import DealDetailsForm from './pages/Test';
 import CalenderDemo from './pages/CalenderDemo';
 import NotFoundPage from './pages/NotFound';
 import Feedback from './pages/Feedback';
+import ExcalidrawBoard from './components/Draw';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
       {/* <Route path='/interview/:interviewId' element={<VideoConference/>} /> */}
       <Route path='/interview' element={<VideoConference/>} />
       <Route path='/feedback' element={<Feedback/>} />
+      <Route path='/draw' element={<ExcalidrawBoard/>}/>
       <Route path='*' element={<NotFoundPage/>} />
       </Routes>
     </Router>
