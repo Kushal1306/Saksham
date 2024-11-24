@@ -64,9 +64,9 @@ const Feedback = () => {
           setIsLoading(true);
               try {
                 const response=await axios.get(`${import.meta.env.VITE_BACKEND_URL}/feedback/${interviewId}`);
-                console.log("the response is:",response.data.feedBack);
+                // console.log("the response is:",response.data.feedBack);
                 if(response.data){
-                  console.log("paramters:",response.data.feedBack.paraemters);
+                  // console.log("parameters:",response.data.feedBack.parameters);
                   setUserFeedback(response.data.feedBack.parameters)
                   const newRatings = generateRatings(response.data.feedBack.parameters);
                   setRatings(newRatings);
@@ -79,7 +79,9 @@ const Feedback = () => {
                 setIsLoading(false)
               }
         }
-        getCandidateFeedBack(interviewId);
+        if(interviewId){
+          getCandidateFeedBack(interviewId);
+        }
   },[interviewId]);
 
 

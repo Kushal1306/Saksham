@@ -154,7 +154,7 @@ export const llmCall = async (userReply, conversationId) => {
             
                 **Note:** 
                 - Ask only one question at a time, focusing on one skill or area per question.
-                - Feel free to ask follow-up questions based on the candidate’s answers to dive deeper into their expertise.
+                - You can ask a follow up question if needed Donot ask too many follow up questions.
                 - Ensure professionalism and challenge the candidate when appropriate to encourage detailed responses.`
             },
             ...history,

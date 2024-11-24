@@ -14,11 +14,11 @@ export const notifyFeedback=async(conversationId,feedBack)=>{
         const candidateDetails=await findCandidateByCandidateId(conversationId);
         if(!candidateDetails)
             return false;
-        let message=`${candidateDetails.name} ( ${candidateDetails.email}) \n took the interview and Feedback has been generated\n ${feedBack}`;
+        let message=`${candidateDetails.name} ( ${candidateDetails.email}) \n took the interview and Feedback has been generated\n`;
         const response=await client.messages.create({
-            from: 'whatsapp:+14155238886',
-            to: 'whatsapp:+916281142549',
             body: message,
+            from: '+19785416859',
+            to: '+916281142549'
         });
         // console.log("response is:",response);
         if(!response)
