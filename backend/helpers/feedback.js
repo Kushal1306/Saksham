@@ -1,6 +1,7 @@
 import ConversationModel from "../models/ChatHistory.js";
 import mongoose from "mongoose";
 import Feedback from "../models/Feedback.js";
+import Candidate from "../models/Candidate.js";
 
 export const checkFeedback=async(conversationId)=>{
      try {
@@ -76,4 +77,17 @@ export const updateCandidateFeedback=async(candidate_id,campaign_id,parameters)=
         console.log("error occured:",error.message);
         return null;
      }
+}
+
+export const findCandidateByCandidateId=async(candidate_id)=>{
+      try {
+        const response=await Candidate.findById(candidate_id);
+        if(!response)
+            return null;
+        return response;
+        
+      } catch (error) {
+          console.log("error occured",error.message);
+          return null;
+      }
 }
