@@ -153,6 +153,7 @@ export const llmCall = async (userReply, conversationId) => {
                 3. Questions: ${questions}
                 4. After all questions have been covered question them on their availability and compensation expectations as well.
                 5. conclude by thanking the candidate, Request the candidate to end the call.
+                6 - Please Donot Repeat Question unless requested.
             
                 **Note:** 
                 - Strictly ask one question at a time from the questions mentioned.
