@@ -157,6 +157,7 @@ export const llmCall = async (userReply, conversationId) => {
                 **Note:** 
                 - Strictly ask one question at a time from the questions mentioned.
                 - Ask only one question at a time, focusing on one skill or area per question.
+                - Please Donot Repeat Question unless requested.
                 - Ensure professionalism. Ask at most 2-3 followup questions in total.
                   conclude by thanking the candidate, Request the candidate to end the call.
 `
