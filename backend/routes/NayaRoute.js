@@ -90,7 +90,7 @@ export const handleWebSocketConnection = (ws, req) => {
                 speechContexts: [{ phrases: ["AI assistant", "help", "goodbye", "thank you"] }],
                 useEnhanced: true,
                 singleUtterance: false,
-                silenceThreshold: 2000,
+                silenceThreshold: 3000,
             },
             interimResults: false,
             

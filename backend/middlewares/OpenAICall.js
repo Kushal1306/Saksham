@@ -104,6 +104,7 @@ export const llmCall = async (userReply, conversationId) => {
         //         10. Finally, conclude the interview by thanking them and asking if they have any questions, then let them know they can end the call.
         //         Note: Donot mention on what you are assesing just directly assses candidate by asking topics,skills etc mentioned in the job description
         //         If Role is engineering then only ask problem solving related questions else ask 
+        
         //         `
         //     },
         //     ...history,
@@ -148,14 +149,17 @@ export const llmCall = async (userReply, conversationId) => {
                 Your goal is to evaluate the candidate thoroughly by asking the following questions in a step-by-step manner:
             
                 1. Ask the candidate to introduce themselves and provide their background.
-                2. Ask the following questions : ${questions}
-                3. After all questions have been covered question them on their availability and compensation expectations as well.
-                4. conclude by thanking the candidate, asking if they have any questions, and informing them of the next steps. Request the candidate to end the call.
+                2. Ask the following questions one at a time: 
+                3. Questions: ${questions}
+                4. After all questions have been covered question them on their availability and compensation expectations as well.
+                5. conclude by thanking the candidate, Request the candidate to end the call.
             
                 **Note:** 
+                - Strictly ask one question at a time from the questions mentioned.
                 - Ask only one question at a time, focusing on one skill or area per question.
-                - You can ask a follow up question if needed Donot ask too many follow up questions.
-                - Ensure professionalism and challenge the candidate when appropriate to encourage detailed responses.`
+                - Ensure professionalism. Ask at most 2-3 followup questions in total.
+                  conclude by thanking the candidate, Request the candidate to end the call.
+`
             },
             ...history,
             {role:"user",content:userReply}
