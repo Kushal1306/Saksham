@@ -129,7 +129,7 @@ export const handleWebSocketConnection = (ws, req) => {
         try {
             const msg = JSON.parse(message);
             if(msg.event==='start'){
-                await processAndRespond(callData.ws,"hello",interviewId);
+                await processAndRespond(callData.ws,"start",interviewId);
             }
             if (msg.event === 'media') {
                 const payload = Buffer.from(msg.media.payload, 'base64');
