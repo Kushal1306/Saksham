@@ -70,4 +70,4 @@ jobs:
         with:
           app-name: 'saksham'
           slot-name: 'Production'
-          package: ./backend  # Use this if backend is in the unzipped folder's root
+          package: . # Use this if backend is in the unzipped folder's root
