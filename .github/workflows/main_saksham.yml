@@ -55,7 +55,7 @@ jobs:
         run: ls -R  # List the files to verify backend folder structure
 
       - name: Unzip artifact for deployment
-        run: unzip release.zip
+        run: unzip release.zip -d backend
 
       - name: Login to Azure
         uses: azure/login@v2
@@ -70,4 +70,4 @@ jobs:
         with:
           app-name: 'saksham'
           slot-name: 'Production'
-          package: . # Use this if backend is in the unzipped folder's root
+          package: ./backend # Use this if backend is in the unzipped folder's root
