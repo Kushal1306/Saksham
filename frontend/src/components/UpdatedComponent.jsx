@@ -66,7 +66,14 @@ export default function VideoConference() {
   };
 
   const initWebSocket = () => {
-    ws.current = new WebSocket(`wss://saksham-rplr.onrender.com/websocket/${interviewId}`);
+    const backend_URL=import.meta.env.VITE_BACKEND_URL;
+    // console.log(backend_URL);
+    const modifiedurl=backend_URL.replace("http","ws");
+    // console.log(modifiedurl);
+    ws.current = new WebSocket(`${modifiedurl}/websocket/${interviewId}`);
+    // ws.current = new WebSocket(`wss://sakshamnew.calmmoss-72962535.southindia.azurecontainerapps.io/websocket/${interviewId}`);
+
+    // ws.current = new WebSocket(`wss://saksham-n0ks.onrender.com/websocket/${interviewId}`);
     // ws.current = new WebSocket(`ws://${import.meta.env.VITE_BACKEND_URL}/websocket/${interviewId}`);
 
     ws.current.onopen = () => {
